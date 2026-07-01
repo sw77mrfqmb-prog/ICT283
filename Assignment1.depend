@@ -1,0 +1,56 @@
+# depslib dependency file v1.0
+1782016428 source:c:\users\delvin\documents\codeblock\assignment1\vectortest.cpp
+	"Vector.h"
+	<iostream>
+
+1782923620 c:\users\delvin\documents\codeblock\assignment1\vector.h
+	<vector>
+
+1781329102 source:c:\users\delvin\documents\codeblock\assignment1\calculator.cpp
+	"Calculator.h"
+	<cmath>
+	<iostream>
+
+1781985630 c:\users\delvin\documents\codeblock\assignment1\calculator.h
+	<string>
+	<iostream>
+	<fstream>
+
+1781412820 source:c:\users\delvin\documents\codeblock\assignment1\date.cpp
+	"Date.h"
+
+1780307378 c:\users\delvin\documents\codeblock\assignment1\date.h
+	<iostream>
+	<string>
+
+1782895387 source:c:\users\delvin\documents\codeblock\assignment1\main.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	"Date.h"
+	"Time.h"
+	"Vector.h"
+	"DataLog.h"
+	"Calculator.h"
+
+1781985349 c:\users\delvin\documents\codeblock\assignment1\time.h
+	<iostream>
+	<string>
+
+1781353927 source:c:\users\delvin\documents\codeblock\assignment1\time.cpp
+	"Time.h"
+
+1781363017 source:c:\users\delvin\documents\codeblock\assignment1\maintest.cpp
+	<iostream>
+	<fstream>
+	<sstream>
+	"Date.h"
+	"Time.h"
+	"Vector.h"
+	"Calculator.h"
+
+1782834818 source:c:\users\delvin\documents\codeblock\assignment1\datalog.cpp
+	"DataLog.h"
+
+1781985504 c:\users\delvin\documents\codeblock\assignment1\datalog.h
+

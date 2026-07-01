@@ -1,0 +1,6 @@
+<map id="DataRecType" name="DataRecType">
+<area shape="rect" id="node1" title=" " alt="" coords="119,233,219,311"/>
+<area shape="rect" id="node2" href="$class_time.html" title="Time.h." alt="" coords="5,20,96,156"/>
+<area shape="rect" id="node3" href="$class_date.html" title="DATE.h." alt="" coords="120,5,219,171"/>
+<area shape="rect" id="node4" href="$class_data_log.html" title="DataLog.h." alt="" coords="243,5,389,171"/>
+</map>
