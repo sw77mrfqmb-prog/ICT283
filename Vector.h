@@ -79,10 +79,8 @@ bool Vector<T>::Insert(int index, const T data)
 {
     if(index >=0 && index < m_vector.size())
         {
-        for(int i = m_vector.size(); i > index; i--)
-            {
-                m_vector.insert(m_vector.cbegin() + index, data);
-            }
+            m_vector.insert(m_vector.cbegin() + index, data);
+            return true;
         }
     else if(index == m_vector.size())
         {
