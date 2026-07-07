@@ -15,11 +15,13 @@ public:
     /** @brief getter to return Date's day
      * @return day int
      */
+    Date(int day, const int month, int year);
     int GetDay() const;
     /** @brief getter to retrieve stored month into parameter
      * @param month
+     * @return year int
      */
-    void GetMonth(std::string& month) const;
+    int GetMonth() const;
     /** @brief getter to return Date's year
      * @return year int
      */
@@ -31,16 +33,24 @@ public:
     /** @brief to update the month by taking it from the parameter
      *  @param  month
      */
-    void SetMonth(const std::string& month) ;
+    void SetMonth(const int month) ;
     /** @brief to update the year by taking it from the parameter
      *  @param  year
      */
     void SetYear(int year) ;
 
+    bool operator<(const Date& newValue) const;
+
+    bool operator>(const Date& newValue) const ;
+
+    bool operator==(const Date& newValue) const;
+
+    int MonthToInt() const;
+
 private:
 
     int m_day;
-    std::string m_month;
+    int m_month;
     int m_year;
 };
 /** \brief to read from the output file

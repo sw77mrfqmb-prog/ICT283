@@ -16,10 +16,10 @@
 	<iostream>
 	<fstream>
 
-1781412820 source:c:\users\delvin\documents\codeblock\assignment1\date.cpp
+1783177868 source:c:\users\delvin\documents\codeblock\assignment1\date.cpp
 	"Date.h"
 
-1780307378 c:\users\delvin\documents\codeblock\assignment1\date.h
+1783177888 c:\users\delvin\documents\codeblock\assignment1\date.h
 	<iostream>
 	<string>
 
@@ -54,10 +54,13 @@
 
 1781985504 c:\users\delvin\documents\codeblock\assignment1\datalog.h
 
-1783156319 source:c:\users\delvin\documents\codeblock\assignment1\bsttest.cpp
+1783158261 source:c:\users\delvin\documents\codeblock\assignment1\bsttest.cpp
 	<iostream>
-	"intBST.h"
+	"BST.h"
 
 1783155782 c:\users\delvin\documents\codeblock\assignment1\intbst.h
+	<iostream>
+
+1783230874 c:\users\delvin\documents\codeblock\assignment1\bst.h
 	<iostream>
 

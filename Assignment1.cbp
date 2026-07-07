@@ -31,6 +31,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="BST.h" />
+		<Unit filename="Calculator.cpp" />
+		<Unit filename="Calculator.h" />
+		<Unit filename="DATE.cpp" />
+		<Unit filename="DATE.h" />
+		<Unit filename="DataLog.cpp" />
+		<Unit filename="DataLog.h" />
+		<Unit filename="MAIN.CPP" />
+		<Unit filename="MainTest.cpp" />
+		<Unit filename="Time.cpp" />
+		<Unit filename="Time.h" />
+		<Unit filename="Vector.h" />
+		<Unit filename="VectorTest.cpp" />
+		<Unit filename="WindTempSolar.csv" />
+		<Unit filename="data_source.txt" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -7,13 +7,22 @@ class Bst
 {
 public:
 
+    struct Node
+    {
+        T data;
+        Node* left;
+        Node* right;
+    };
+
     Bst();
 
     ~Bst();
 
-    void Insert(T value);
+    void clear();
 
-    bool Search(T value) const;
+    void Insert(const T& value);
+
+    bool Search(const T& value) const;
 
     void InOrderT() const;
 
@@ -23,18 +32,11 @@ public:
 
 private:
 
-    struct Node
-    {
-        T data;
-        Node* left;
-        Node* right;
-    };
-
     Node* m_root;
 
-    Node* Insert(Node* node, T value);
+    Node* Insert(Node* node,const T& value);
 
-    bool Search(Node* node,T value) const;
+    bool Search(Node* node,const T& value) const;
 
     void DeleteTree(Node* node);
 
@@ -56,12 +58,18 @@ Bst<T>::~Bst()
     DeleteTree(m_root);
 }
 template <class T>
-void Bst<T>::Insert(T value)
+void Bst<T>::clear()
+{
+    DeleteTree(m_root);
+    m_root = nullptr;
+}
+template <class T>
+void Bst<T>::Insert(const T& value)
 {
     m_root = Insert(m_root, value);
 }
 template <class T>
-bool Bst<T>::Search(T value) const
+bool Bst<T>::Search(const T& value) const
 {
     return Search(m_root, value);
 }
@@ -84,7 +92,7 @@ void Bst<T>::PostOrderT() const
     std::cout << std::endl;
 }
 template <class T>
-typename Bst<T>::Node* Bst<T>::Insert(Node* node, T value)
+typename Bst<T>::Node* Bst<T>::Insert(Node* node, const T& value)
 {
     if(node == nullptr)
     {
@@ -108,7 +116,7 @@ typename Bst<T>::Node* Bst<T>::Insert(Node* node, T value)
     return node;
 }
 template <class T>
-bool Bst<T>::Search(Node* node, T value)const
+bool Bst<T>::Search(Node* node,const T& value)const
 {
     if(node == nullptr)
     {
