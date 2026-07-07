@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1783349554 source:c:\users\delvin\documents\codeblock\project1\bsttest.cpp
+	<iostream>
+	"intBST.h"
+	"../Assignment1/BST.h"
+
+1783155782 c:\users\delvin\documents\codeblock\project1\intbst.h
+	<iostream>
+
+1783349429 c:\users\delvin\documents\codeblock\assignment1\bst.h
+	<iostream>
+
