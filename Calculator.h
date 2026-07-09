@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "Vector.h"
 
 /** @brief Calculator.h
 * @author Delvin
@@ -14,18 +15,19 @@ public:
     /** @brief default constructor
      */
     Calculator();
-    /** @brief data array float type
+    /* removed cause paramater already takes in a vector
+    /** @brief data vector float type
      */
-    float* dataArray;
+    Vector<float> dataVector;
     /** @brief to calculate Mean aka average
      * @param size (number of index that holds data)
      */
     void calculateMean(int size);
     /** @brief  to calculate the standard Deviation
      * @param size (number of index that holds data)
-     * @param dataArray with const float data typ
+     * @param dataVector with const float data type
      */
-    void calculateSD(int size, const float* dataArray);
+    void calculateSD(int size, const Vector<float>& dataVector);
     /** @brief getter for sum
      * @return sum value in double type
      *
@@ -49,9 +51,9 @@ public:
     void SetSize(int size);
     /** @brief  settter for sum
      * @param size (number of index that holds data)
-     * @param dataArray will read each index to add it all up as new sum
+     * @param dataVector will read each index to add it all up as new sum
      */
-    void SetSum(int size, const float* dataArray);
+    void SetSum(int size, const Vector<float>& dataVector);
 
 
 private:

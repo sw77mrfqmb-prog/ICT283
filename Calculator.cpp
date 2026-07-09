@@ -1,6 +1,7 @@
 #include "Calculator.h"
 #include <cmath>
 #include <iostream>
+#include "Vector.h"
 
 Calculator::Calculator()
 {
@@ -16,12 +17,12 @@ void Calculator::calculateMean(int size)
 
 }
 
-void Calculator::calculateSD(int size, const float* array)
+void Calculator::calculateSD(int size, const Vector<float>& dataVector)
 {
-    double tempSum = 0;
-    double mean = GetMean();
+    float tempSum = 0;
+    float mean = GetMean();
     for(int i = 0; i < size; i++){
-        tempSum += (array[i] - mean) * (array[i] - mean);
+        tempSum += (dataVector[i] - mean) * (dataVector[i] - mean);
     }
     tempSum = tempSum/(size -1);
 
@@ -52,11 +53,11 @@ void Calculator::SetSize(int size)
     m_size = size;
 }
 
-void Calculator::SetSum(int size,const float* dataArray)
+void Calculator::SetSum(int size,const Vector<float>& dataVector)
 {
-    double tempSum = 0;
+    float tempSum = 0;
     for(int i = 0; i < size; i++){
-        tempSum += dataArray[i];
+        tempSum += dataVector[i];
     }
     m_sum = tempSum;
 }
@@ -68,10 +69,11 @@ std::ifstream & operator >>(std::ifstream & input, Calculator & Calc)
 
   Calc.SetSize(size);
 
-  Calc.dataArray = new float[size];
+  float value = 0;
 
     for(int i = 0; i < size; i ++){
-        input >> Calc.dataArray[i];
+        input >> value;
+        Calc.dataVector.Insert(i,value);
     }
     return input;
 }
