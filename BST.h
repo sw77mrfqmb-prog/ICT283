@@ -1,6 +1,6 @@
 #ifndef BST_H_INCLUDED
 #define BST_H_INCLUDED
- #include <iostream>
+#include <iostream>
 
 template <class T>
 class Bst
@@ -20,7 +20,7 @@ public:
 
     void clear();
 
-    void Insert(const T& value);
+    bool Insert(const T& value);
 
     bool Search(const T& value) const;
 
@@ -34,7 +34,7 @@ private:
 
     Node* m_root;
 
-    Node* Insert(Node* node,const T& value);
+    bool Insert(Node*& node,const T& value);
 
     bool Search(Node* node,const T& value) const;
 
@@ -64,9 +64,9 @@ void Bst<T>::clear()
     m_root = nullptr;
 }
 template <class T>
-void Bst<T>::Insert(const T& value)
+bool Bst<T>::Insert(const T& value)
 {
-    m_root = Insert(m_root, value);
+    return Insert(m_root, value);
 }
 template <class T>
 bool Bst<T>::Search(const T& value) const
@@ -92,28 +92,28 @@ void Bst<T>::PostOrderT() const
     std::cout << std::endl;
 }
 template <class T>
-typename Bst<T>::Node* Bst<T>::Insert(Node* node, const T& value)
+bool Bst<T>::Insert(Node*& node, const T& value)
 {
     if(node == nullptr)
     {
-    // this initialize the tree
-    Node* newNode = new Node;
-    newNode->data = value;
-    newNode->left = nullptr;
-    newNode->right = nullptr;
-    return newNode;
+        // this initialize the tree
+        node = new Node;
+        node->data = value;
+        node->left = nullptr;
+        node->right = nullptr;
+        return true;
     }
 
     if(value < node->data)
     {
-        node->left = Insert(node->left,value);
+        return Insert(node->left, value);
     }
 
     else if(value > node->data)
     {
-        node->right = Insert(node->right,value);
+        return Insert(node->right, value);
     }
-    return node;
+    return false;
 }
 template <class T>
 bool Bst<T>::Search(Node* node,const T& value)const
@@ -128,7 +128,9 @@ bool Bst<T>::Search(Node* node,const T& value)const
         return true;
     }
     if(value < node->data)
+    {
         return Search(node->left, value);
+    }
     return Search(node->right, value);
 
 }
