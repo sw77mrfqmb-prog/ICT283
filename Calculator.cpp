@@ -61,6 +61,37 @@ void Calculator::SetSum(int size,const Vector<double>& dataVector)
     }
     m_sum = tempSum;
 }
+
+double Calculator::sPCC(const Vector<double>& x, const Vector<double>& y)
+{
+    double xSum = 0;
+    double ySum = 0;
+
+    for(int i = 0; i <x.GetSize(); i++)
+    {
+        xSum += x[i];
+        ySum += y[i];
+    }
+
+    double xMean = xSum / x.GetSize();
+    double yMean = ySum / y.GetSize();
+
+    double numerator = 0;
+    double xDenominator = 0;
+    double yDenominator = 0;
+
+    //calculation from the lab
+    for(int i =0; i<x.GetSize(), i++)
+    {
+        numerator += (x[i] - xMean) * (y[i]- yMean);
+        xDenominator += (x[i] - xMean) * ([x[i] - xMean);
+        yDenominator += (y[i] - yMean) * (y[i] - yMean);
+
+    }
+
+    return (numerator/(std::sqrt(xDenominator)*std::sqrt(yDenominator)));
+
+}
 std::ifstream & operator >>(std::ifstream & input, Calculator & Calc)
 {
   int size = 0;
