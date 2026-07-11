@@ -64,8 +64,14 @@ void Calculator::SetSum(int size,const Vector<double>& dataVector)
 
 double Calculator::sPCC(const Vector<double>& x, const Vector<double>& y)
 {
+    if(x.GetSize() != y.GetSize() || x.GetSize() == 0)
+    {
+        return 0;
+    }
+
     double xSum = 0;
     double ySum = 0;
+
 
     for(int i = 0; i <x.GetSize(); i++)
     {
