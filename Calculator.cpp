@@ -98,6 +98,23 @@ double Calculator::sPCC(const Vector<double>& x, const Vector<double>& y)
     return (numerator/(std::sqrt(xDenominator)*std::sqrt(yDenominator)));
 
 }
+
+double Calculator::mad(const Vector<double>& dataVector)
+{
+    SetSum(dataVector.GetSize(), dataVector);
+    calculateMean(dataVector.GetSize());
+
+    double total = 0;
+
+    for(int i =0; i<dataVector.GetSize();i++)
+    {
+        total+= std::abs(dataVector[i] - GetMean());
+    }
+
+    return (total/dataVector.GetSize());
+}
+
+
 std::ifstream & operator >>(std::ifstream & input, Calculator & Calc)
 {
   int size = 0;

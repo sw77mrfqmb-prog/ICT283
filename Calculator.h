@@ -16,18 +16,18 @@ public:
      */
     Calculator();
     /* removed cause paramater already takes in a vector
-    /** @brief data vector float type
+    /** @brief data vector double type
      */
-    Vector<float> dataVector;
+    Vector<double> dataVector;
     /** @brief to calculate Mean aka average
      * @param size (number of index that holds data)
      */
     void calculateMean(int size);
     /** @brief  to calculate the standard Deviation
      * @param size (number of index that holds data)
-     * @param dataVector with const float data type
+     * @param dataVector with const double data type
      */
-    void calculateSD(int size, const Vector<float>& dataVector);
+    void calculateSD(int size, const Vector<double>& dataVector);
     /** @brief getter for sum
      * @return sum value in double type
      *
@@ -53,7 +53,17 @@ public:
      * @param size (number of index that holds data)
      * @param dataVector will read each index to add it all up as new sum
      */
-    void SetSum(int size, const Vector<float>& dataVector);
+    void SetSum(int size, const Vector<double>& dataVector);
+    /** @brief  sPCC sample Pearson Correlation Coefficient of between two numeric Vectors
+     * @param x first vector
+     * @param y second vector
+     * @return double the calculated value of the sPCC
+     */
+    double sPCC(const Vector<double> x, const Vector<double> y);
+    /** @brief MAD Mean Absolute Deviation
+     * @param dataVector will read each index to add it all up as new sum
+     */
+    double mad(const Vector<double>& dataVector);
 
 
 private:
