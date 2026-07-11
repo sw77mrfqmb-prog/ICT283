@@ -17,10 +17,10 @@ void Calculator::calculateMean(int size)
 
 }
 
-void Calculator::calculateSD(int size, const Vector<float>& dataVector)
+void Calculator::calculateSD(int size, const Vector<double>& dataVector)
 {
-    float tempSum = 0;
-    float mean = GetMean();
+    double tempSum = 0;
+    double mean = GetMean();
     for(int i = 0; i < size; i++){
         tempSum += (dataVector[i] - mean) * (dataVector[i] - mean);
     }
@@ -53,9 +53,9 @@ void Calculator::SetSize(int size)
     m_size = size;
 }
 
-void Calculator::SetSum(int size,const Vector<float>& dataVector)
+void Calculator::SetSum(int size,const Vector<double>& dataVector)
 {
-    float tempSum = 0;
+    double tempSum = 0;
     for(int i = 0; i < size; i++){
         tempSum += dataVector[i];
     }
@@ -69,7 +69,7 @@ std::ifstream & operator >>(std::ifstream & input, Calculator & Calc)
 
   Calc.SetSize(size);
 
-  float value = 0;
+  double value = 0;
 
     for(int i = 0; i < size; i ++){
         input >> value;
