@@ -73,10 +73,10 @@ int main()
         }
         case 3:
         {
-            int year;
-            std::cout << "Enter year: " << std::endl;
-            std::cin >> year;
-            printSolarRadiation(excel_data, year);
+            int month;
+            std::cout << "Enter numeric month(1 to 12): " << std::endl;
+            std::cin >> month;
+            printsPCC(excel_data, month);
             break;
         }
         case 4:
