@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -6,6 +5,7 @@
 #include "Time.h"  // your Time class from this lab
 #include "Vector.h" // your Template Vector class from this lab
 #include "Calculator.h"
+#include "BST.h"
 
 int main()
 {

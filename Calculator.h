@@ -59,7 +59,7 @@ public:
      * @param y second vector
      * @return double the calculated value of the sPCC
      */
-    double sPCC(const Vector<double> x, const Vector<double> y);
+    double sPCC(const Vector<double>& x, const Vector<double>& y);
     /** @brief MAD Mean Absolute Deviation
      * @param dataVector will read each index to add it all up as new sum
      */

@@ -87,15 +87,48 @@ double Calculator::sPCC(const Vector<double>& x, const Vector<double>& y)
     double yDenominator = 0;
 
     //calculation from the lab
-    for(int i =0; i<x.GetSize(), i++)
+    for(int i =0; i<x.GetSize(); i++)
     {
         numerator += (x[i] - xMean) * (y[i]- yMean);
-        xDenominator += (x[i] - xMean) * ([x[i] - xMean);
+        xDenominator += (x[i] - xMean) * (x[i] - xMean);
         yDenominator += (y[i] - yMean) * (y[i] - yMean);
 
     }
 
     return (numerator/(std::sqrt(xDenominator)*std::sqrt(yDenominator)));
+
+}
+
+//  create 3 vector first as input for sPCC
+//this calls sPCC and print out the results for all speed,temp and sr
+void printsPCC(const DatalogType& excel_data, int month)
+{
+    Vector<double> speedVector;
+    Vector<double> tempVector;
+    Vector<double> srVector;
+
+    for(int i =0; i<excel_data.GetSize();i++)
+    {
+        if(excel_data[i].d.GetMonth() == month)
+        {
+            speedVector.Insert(speedVector.GetSize(),excel_data[i].data.GetSpeed());
+            tempVector.Insert(speedVector.GetSize(),excel_data[i].data.GetTemperature());
+            srVector.Insert(speedVector.GetSize(),excel_data[i].data.GetSolarRadiation());
+        }
+    }
+
+    std::cout << "Sample Pearson Correlation Coefficient for " << MonthArr[month -1] << std::endl;
+
+    if(speedVector.GetSize() == 0)
+    {
+        std::cout << "No data ";
+        return;
+    }
+
+    Calculator calc;
+    std::cout << "S_T: " << calc.sPCC(speedVector,tempVector) << std::endl;
+    std::cout << "S_R: " << calc.sPCC(speedVector,srVector) << std::endl;
+    std::cout << "T_R: " << calc.sPCC(tempVector,srVector) << std::endl;
 
 }
 

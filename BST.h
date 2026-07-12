@@ -16,6 +16,10 @@ public:
 
     Bst();
 
+    Bst(const Bst& other);
+
+    Bst& operator=(const Bst& other);
+
     ~Bst();
 
     void clear();
@@ -24,13 +28,15 @@ public:
 
     bool Search(const T& value) const;
 
-    void InOrderT() const;
+    void InOrderT(void (*visit)(T&)) const;
 
-    void PreOrderT() const;
+    void PreOrderT(void (*visit)(T&)) const;
 
-    void PostOrderT() const;
+    void PostOrderT(void (*visit)(T&)) const;
 
 private:
+
+    Node* CopyTree(Node* node);
 
     Node* m_root;
 
@@ -40,11 +46,11 @@ private:
 
     void DeleteTree(Node* node);
 
-    void InOrderT(Node* node) const;
+    void InOrderT(Node* node, void (*visit)(T&)) const;
 
-    void PreOrderT(Node* node) const;
+    void PreOrderT(Node* node, void (*visit)(T&)) const;
 
-    void PostOrderT(Node* node) const;
+    void PostOrderT(Node* node, void (*visit)(T&)) const;
 
 };
 template <class T>
@@ -52,6 +58,8 @@ Bst<T>::Bst()
 {
     m_root = nullptr;
 }
+
+
 template <class T>
 Bst<T>::~Bst()
 {
@@ -74,22 +82,58 @@ bool Bst<T>::Search(const T& value) const
     return Search(m_root, value);
 }
 template <class T>
-void Bst<T>::InOrderT() const
+void Bst<T>::InOrderT(void (*visit)(T&)) const
 {
-    InOrderT(m_root);
+    InOrderT(m_root,visit);
     std::cout << std::endl;
 }
 template <class T>
-void Bst<T>::PreOrderT() const
+void Bst<T>::PreOrderT(void (*visit)(T&)) const
 {
-    PreOrderT(m_root);
+    PreOrderT(m_root,visit);
     std::cout << std::endl;
 }
 template <class T>
-void Bst<T>::PostOrderT() const
+void Bst<T>::PostOrderT(void (*visit)(T&)) const
 {
-    PostOrderT(m_root);
+    PostOrderT(m_root,visit);
     std::cout << std::endl;
+}
+
+template <class T>
+Bst<T>::Bst(const Bst& other)
+{
+    m_root = CopyTree(other.m_root);
+}
+
+template <class T>
+Bst<T>& Bst<T>::operator=(const Bst& other)
+{
+
+        DeleteTree(m_root);
+        m_root = CopyTree(other.m_root);
+
+
+    return *this;
+}
+
+template <class T>
+typename Bst<T>::Node* Bst<T>::CopyTree(Node* node)
+{
+    if (node == nullptr)
+    {
+        return nullptr;
+    }
+
+    Node* newNode = new Node;
+
+    newNode->data = node->data;
+
+    newNode->left = CopyTree(node->left);
+
+    newNode->right = CopyTree(node->right);
+
+    return newNode;
 }
 template <class T>
 bool Bst<T>::Insert(Node*& node, const T& value)
@@ -146,37 +190,37 @@ void Bst<T>::DeleteTree(Node* node)
     delete node;
 }
 template <class T>
-void Bst<T>::InOrderT(Node* node) const
+void Bst<T>::InOrderT(Node* node, void (*visit)(T&)) const
 {
     if(node == nullptr)
     {
         return;
     }
-    InOrderT(node->left);
-    std::cout << node->data << " ";
-    InOrderT(node->right);
+    InOrderT(node->left,visit);
+    visit(node->data);
+    InOrderT(node->right,visit);
 }
 template <class T>
-void Bst<T>::PreOrderT(Node* node) const
+void Bst<T>::PreOrderT(Node* node, void (*visit)(T&)) const
 {
     if(node == nullptr)
     {
         return;
     }
-    std::cout << node->data << " ";
-    PreOrderT(node->left);
-    PreOrderT(node->right);
+    visit(node->data);
+    PreOrderT(node->left,visit);
+    PreOrderT(node->right,visit);
 }
 template <class T>
-void Bst<T>::PostOrderT(Node* node) const
+void Bst<T>::PostOrderT(Node* node, void (*visit)(T&)) const
 {
     if(node == nullptr)
     {
         return;
     }
-    PostOrderT(node->left);
-    PostOrderT(node->right);
-    std::cout << node->data << " ";
+    PostOrderT(node->left,visit);
+    PostOrderT(node->right,visit);
+    visit(node->data);
 }
 
 #endif // BST_H_INCLUDED
