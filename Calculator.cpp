@@ -111,9 +111,9 @@ void printsPCC(const DatalogType& excel_data, int month)
     {
         if(excel_data[i].d.GetMonth() == month)
         {
-            speedVector.Insert(speedVector.GetSize(),excel_data[i].data.GetSpeed());
-            tempVector.Insert(speedVector.GetSize(),excel_data[i].data.GetTemperature());
-            srVector.Insert(speedVector.GetSize(),excel_data[i].data.GetSolarRadiation());
+            speedVector.Insert(speedVector.GetSize(),(double)excel_data[i].data.GetSpeed());
+            tempVector.Insert(temoVector.GetSize(),(double)excel_data[i].data.GetTemperature());
+            srVector.Insert(srVector.GetSize(),(double)excel_data[i].data.GetSolarRadiation());
         }
     }
 
