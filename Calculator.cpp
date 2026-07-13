@@ -99,39 +99,6 @@ double Calculator::sPCC(const Vector<double>& x, const Vector<double>& y)
 
 }
 
-//  create 3 vector first as input for sPCC
-//this calls sPCC and print out the results for all speed,temp and sr
-void printsPCC(const DatalogType& excel_data, int month)
-{
-    Vector<double> speedVector;
-    Vector<double> tempVector;
-    Vector<double> srVector;
-
-    for(int i =0; i<excel_data.GetSize();i++)
-    {
-        if(excel_data[i].d.GetMonth() == month)
-        {
-            speedVector.Insert(speedVector.GetSize(),(double)excel_data[i].data.GetSpeed());
-            tempVector.Insert(temoVector.GetSize(),(double)excel_data[i].data.GetTemperature());
-            srVector.Insert(srVector.GetSize(),(double)excel_data[i].data.GetSolarRadiation());
-        }
-    }
-
-    std::cout << "Sample Pearson Correlation Coefficient for " << MonthArr[month -1] << std::endl;
-
-    if(speedVector.GetSize() == 0)
-    {
-        std::cout << "No data ";
-        return;
-    }
-
-    Calculator calc;
-    std::cout << "S_T: " << calc.sPCC(speedVector,tempVector) << std::endl;
-    std::cout << "S_R: " << calc.sPCC(speedVector,srVector) << std::endl;
-    std::cout << "T_R: " << calc.sPCC(tempVector,srVector) << std::endl;
-
-}
-
 double Calculator::mad(const Vector<double>& dataVector)
 {
     SetSum(dataVector.GetSize(), dataVector);

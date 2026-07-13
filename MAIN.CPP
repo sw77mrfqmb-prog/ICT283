@@ -6,6 +6,7 @@
 #include "Vector.h" // your Template Vector class from this lab
 #include "DataLog.h"
 #include "Calculator.h"
+#include <iomanip>
 const std::string MonthArr[] =
 {
     "January", "February", "March", "April", "May", "June", "July",
@@ -33,6 +34,8 @@ void printTemperature(const DatalogType& excel_data, int year);
 void printSolarRadiation(const DatalogType& excel_data, int year);
 
 void printAll(const DatalogType& excel_data, int year);
+
+void printsPCC(const DatalogType& excel_data, int month);
 
 int main()
 {
@@ -109,7 +112,7 @@ bool loadData(DatalogType& excel_data)
     if( !infile )
     {
         std::cout << "Error: Could not find or open the data/data_source.txt file!" << std::endl;
-        return -1;
+        return false;
     }
     std::string tempFileName;
     while(std::getline(infile,tempFileName))
@@ -257,45 +260,38 @@ void menu()
     std::cout << "-------------- MENU --------------" << std::endl;
     std::cout << "1.The average wind speed and sample standard deviation for this wind speed given a specified month and year." << std::endl;
     std::cout << "2.Average ambient air temperature and sample deviation for each month of a specified year." << std::endl;
-    std::cout << "3.Total solar radiation in kWh/m^2 for each month of a specified year." << std::endl;
+    std::cout << "3.sPPC 3 combinations." << std::endl;
     std::cout << "4.Average wind speed (km/h, average ambient air temperature and total solar radiation in kWh/m^2 for each month of a specified year." << std::endl;
 }
 
 void printWind(const DatalogType& excel_data, int month, int year)
 {
 
-    std::string strMonth = MonthArr[month -1];
-
-    float* speedArray = new float[excel_data.GetSize()];
-    int size = 0;
+    Vector<double> speedVector;
+    int size =0;
 
     for(int i = 0; i < excel_data.GetSize(); i++)
     {
-        std::string recordMonth;
-        excel_data[i].d.GetMonth(recordMonth);
-
-        if(recordMonth == strMonth && excel_data[i].d.GetYear() == year)
+        //check if year and month is the same based on input, then add into the speedVector
+        if( excel_data[i].d.GetMonth() == month && excel_data[i].d.GetYear() == year)
         {
-            speedArray[size] = excel_data[i].data.GetSpeed();
+            speedVector.Insert(speedVector.GetSize(),(double)excel_data[i].data.GetSpeed());
             size++;
         }
     }
     if(size == 0)
     {
-        std::cout << strMonth << " " << year << ": No Data" << std::endl;
-        delete[] speedArray;
+        std::cout << MonthArr[month-1] << " " << year << ": No Data" << std::endl;
         return;
     }
     Calculator windCalc;
-    windCalc.SetSum(size, speedArray);
-    windCalc.calculateMean(size);
-    windCalc.calculateSD(size, speedArray);
+    windCalc.SetSum(speedVector.GetSize(), speedVector);
+    windCalc.calculateMean(speedVector.GetSize());
+    windCalc.calculateSD(speedVector.GetSize(), speedVector);
 
-    std::cout << strMonth << " " << year << ":" <<std::endl;
+    std::cout << MonthArr[month-1] << " " << year << ":" <<std::endl;
     std::cout << "Average speed: " << windCalc.GetMean() << " km/h" << std::endl;
     std::cout << "Sample stdev: "  << windCalc.GetSD() << std::endl;
-
-    delete[] speedArray;
 }
 
 void printTemperature(const DatalogType& excel_data, int year)
@@ -303,67 +299,60 @@ void printTemperature(const DatalogType& excel_data, int year)
 
     for(int m = 1; m <= 12; m++)
     {
+        Vector<double> tempVector;
 
-        std::string stringMonth = MonthArr[m-1];
-
-        float* tempArray = new float[excel_data.GetSize()];
         int size = 0;
 
         for(int i =0; i< excel_data.GetSize(); i++)
         {
-            std::string recordMonth;
-            excel_data[i].d.GetMonth(recordMonth);
 
-            if(recordMonth == stringMonth && excel_data[i].d.GetYear() == year)
+            if(excel_data[i].d.GetMonth() == m && excel_data[i].d.GetYear() == year)
             {
-                tempArray[size] = excel_data[i].data.GetTemperature();
+                tempVector.Insert(tempVector.GetSize(), (double)excel_data[i].data.GetTemperature());
                 size++;
             }
         }
         if(size ==0)
         {
-            std::cout << stringMonth << ": No Data" << std::endl;
+            std::cout << MonthArr[m-1] << ": No Data" << std::endl;
         }
         else
         {
             Calculator calc;
-            calc.SetSum(size, tempArray);
-            calc.calculateMean(size);
-            calc.calculateSD(size, tempArray);
+            calc.SetSum(tempVector.GetSize(), tempVector);
+            calc.calculateMean(tempVector.GetSize());
+            calc.calculateSD(tempVector.GetSize(), tempVector);
 
-            std::cout << stringMonth << ": ";
+            std::cout << MonthArr[m-1] << ": ";
             std::cout << "average: " << calc.GetMean() << " degrees C, ";
             std::cout << "stdev: " << calc.GetSD() << std::endl;
         }
     }
 }
-
+//changed but not used.
 void printSolarRadiation(const DatalogType& excel_data, int year)
 {
+    Vector<double> srVector;
     for(int m = 1; m <= 12; m++)
     {
-        std::string stringMonth = MonthArr[m-1];
-        float totalSR = 0.0f;
         int size = 0;
+        float totalSR = 0.0f;
 
         for(int i =0; i< excel_data.GetSize(); i++)
         {
-            std::string recordMonth;
-            excel_data[i].d.GetMonth(recordMonth);
-
-            if(recordMonth == stringMonth && excel_data[i].d.GetYear() == year)
+            if(excel_data[i].d.GetMonth() == m && excel_data[i].d.GetYear() == year)
             {
-                totalSR += excel_data[i].data.GetSolarRadiation();
+                totalSR +=(double)excel_data[i].data.GetSolarRadiation();
                 size++;
             }
         }
         if(size ==0)
         {
-            std::cout << stringMonth << ": No Data" << std::endl;
+            std::cout << MonthArr[m-1] << ": No Data" << std::endl;
         }
         else
         {
-            std::cout << stringMonth << ": " << totalSR << " kWh/m2" << std::endl;
+            std::cout << MonthArr[m-1] << ": " << totalSR << " kWh/m2" << std::endl;
         }
     }
 }
@@ -379,54 +368,45 @@ void printAll(const DatalogType& excel_data, int year)
 
     for(int m = 1; m <= 12; m++)
     {
-        std::string stringMonth = MonthArr[m-1];
-
-        float* speedArray = new float[excel_data.GetSize()];
-        float* tempArray = new float[excel_data.GetSize()];
+        Vector<double>  speedVector;
+        Vector<double>  tempVector;
         float totalSR =0.0f;
-        int speedSize = 0;
-        int tempSize = 0;
         int srSize = 0;
 
         for(int i =0 ; i< excel_data.GetSize(); i++)
         {
-            std::string recordMonth;
-            excel_data[i].d.GetMonth(recordMonth);
-
-            if(recordMonth == stringMonth && excel_data[i].d.GetYear() == year )
+            if(excel_data[i].d.GetMonth() == m && excel_data[i].d.GetYear() == year )
             {
-                speedArray[speedSize] = excel_data[i].data.GetSpeed();
-                speedSize ++;
+                speedVector.Insert(speedVector.GetSize(),(double)excel_data[i].data.GetSpeed());
 
-                tempArray[tempSize] = excel_data[i].data.GetTemperature();
-                tempSize ++;
+                tempVector.Insert(tempVector.GetSize(), (double)excel_data[i].data.GetTemperature());
 
-                totalSR += excel_data[i].data.GetSolarRadiation()*(10.0f / 60.0f) / 1000.0f;
+                totalSR += excel_data[i].data.GetSolarRadiation();
                 srSize ++;
             }
         }
 
-        if(speedSize >0 || tempSize >0 || srSize >0)
+        if(speedVector.GetSize() >0 || tempVector.GetSize() >0 || srSize >0)
         {
             checkData = true;
-            outfile << stringMonth << ",";
+            outfile << MonthArr[m-1] << ",";
 
-            if(speedSize >0)
+            if(speedVector.GetSize() >0)
             {
                 Calculator calc;
-                calc.SetSum(speedSize, speedArray);
-                calc.calculateMean(speedSize);
-                calc.calculateSD(speedSize, speedArray);
+                calc.SetSum(speedVector.GetSize(), speedVector);
+                calc.calculateMean(speedVector.GetSize());
+                calc.calculateSD(speedVector.GetSize(), speedVector);
                 outfile << calc.GetMean() << "(" << calc.GetSD() << ")";
             }
             outfile << ",";
 
-            if(tempSize >0)
+            if(tempVector.GetSize() >0)
             {
                 Calculator calc;
-                calc.SetSum(tempSize, tempArray);
-                calc.calculateMean(tempSize);
-                calc.calculateSD(tempSize, tempArray);
+                calc.SetSum( tempVector.GetSize(), tempVector);
+                calc.calculateMean( tempVector.GetSize());
+                calc.calculateSD( tempVector.GetSize(), tempVector);
                 outfile << calc.GetMean() << "(" << calc.GetSD() << ")";
             }
             outfile << ",";
@@ -437,9 +417,6 @@ void printAll(const DatalogType& excel_data, int year)
             }
 
             outfile << std::endl;
-
-            delete[] speedArray;
-            delete[] tempArray;
         }
     }
     if(!checkData)
@@ -448,4 +425,42 @@ void printAll(const DatalogType& excel_data, int year)
     }
     outfile.close();
     std::cout << "Success" << std::endl;
+}
+//  create 3 vector first as input for sPCC
+//this calls sPCC and print out the results for all speed,temp and sr
+void printsPCC(const DatalogType& excel_data, int month)
+{
+    if(month < 1 || month >12)
+    {
+        std::cout << "Invalid month only 1 to 12.";
+        return;
+    }
+    Vector<double> speedVector;
+    Vector<double> tempVector;
+    Vector<double> srVector;
+
+    for(int i =0; i<excel_data.GetSize();i++)
+    {
+        if(excel_data[i].d.GetMonth() == month)
+        {
+            speedVector.Insert(speedVector.GetSize(),(double)excel_data[i].data.GetSpeed());
+            tempVector.Insert(tempVector.GetSize(),(double)excel_data[i].data.GetTemperature());
+            srVector.Insert(srVector.GetSize(),(double)excel_data[i].data.GetSolarRadiation());
+        }
+    }
+
+    std::cout << "Sample Pearson Correlation Coefficient for " << MonthArr[month -1] << std::endl;
+
+    if(speedVector.GetSize() == 0)
+    {
+        std::cout << "No data ";
+        return;
+    }
+
+    Calculator calc;
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "S_T: " << calc.sPCC(speedVector,tempVector) << std::endl;
+    std::cout << "S_R: " << calc.sPCC(speedVector,srVector) << std::endl;
+    std::cout << "T_R: " << calc.sPCC(tempVector,srVector) << std::endl;
+
 }
